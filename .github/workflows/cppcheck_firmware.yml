@@ -1,0 +1,26 @@
+name: cppcheck - firmware
+
+run-name: Cppcheck - firmware
+
+on: [push]
+
+env:
+  SRC_CODE: src/main.c
+
+jobs:
+  oled_cppcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install cppcheck
+        run: |
+          sudo apt install cppcheck
+
+      - name: run cppcheck
+        run: |
+
+          cppcheck -iASF -ioled --enable=all --suppress=shiftTooManyBitsSigned --suppress=missingIncludeSystem --suppress=integerOverflow --suppress=unmatchedSuppression --suppress=unusedFunction --suppress=invalidPrintfArgType_sint --suppress=invalidPrintfArgType_uint -I firmware/src/config --error-exitcode=2 ${SRC_CODE}

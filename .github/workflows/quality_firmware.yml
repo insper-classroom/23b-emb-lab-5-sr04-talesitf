@@ -1,0 +1,35 @@
+name: Code Quality - firmware
+
+run-name: Code Quality - firmware
+
+on: [push]
+
+env:
+  SRC_CODE: src/main.c
+
+jobs:
+  oled_code_quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install cppcheck
+        run: |
+          sudo apt install cppcheck
+
+      - name: Install firmware-best-practice-checker
+        run: |
+          git clone https://github.com/insper-education/firmware-best-practice-checker checker
+          python -m pip install --upgrade pip
+          pip install -r checker/requirements.txt
+
+      - name: run cppcheck
+        run: |
+          cppcheck -iASF -ioled --enable=all --suppress=missingIncludeSystem --suppress=integerOverflow --suppress=unmatchedSuppression -I firmware/src/config --dump ${SRC_CODE}
+
+      - name: run firmware-best-practice-cheker
+        run: |
+          python3 checker/check.py ${SRC_CODE}.dump
