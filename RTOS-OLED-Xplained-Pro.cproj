@@ -39,8 +39,9 @@
           <option id="common.utils.stdio.stdio_serial" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.mpu" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.pio" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="thirdparty.os.freertos.version" value="Add" config="8.2.3" content-id="Atmel.ASF" />
           <option id="sam.drivers.spi" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="thirdparty.os.freertos.version" value="Add" config="8.2.3" content-id="Atmel.ASF" />
+          <option id="sam.drivers.rtt" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.services.freertos.sam_example" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.utils.cmsis.same70.source.template" value="Add" config="" content-id="Atmel.ASF" />
         </options>
@@ -271,11 +272,13 @@
           <file path="src/ASF/common/services/delay/delay.h" framework="" version="3.35.1" source="common\services\delay\delay.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/spi/spi.c" framework="" version="3.42.0" source="sam\drivers\spi\spi.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/spi/spi.h" framework="" version="3.42.0" source="sam\drivers\spi\spi.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/rtt/rtt.c" framework="" version="3.44.1" source="sam\drivers\rtt\rtt.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/rtt/rtt.h" framework="" version="3.44.1" source="sam\drivers\rtt\rtt.h" changed="False" content-id="Atmel.ASF" />
         </files>
         <documentation help="http://asf.atmel.com/docs/3.35.1/common.services.freertos.sam_example.same70_xplained/html/index.html" />
         <offline-documentation help="" />
         <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.42.0" />
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.44.1" />
         </dependencies>
         <project id="common.services.freertos.sam_example.same70_xplained" value="Add" config="" content-id="Atmel.ASF" />
         <board id="board.same70_xplained" value="Add" config="" content-id="Atmel.ASF" />
@@ -333,6 +336,7 @@
       <Value>../src/config</Value>
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/sam/drivers/spi</Value>
+      <Value>../src/ASF/sam/drivers/rtt</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize most (-O3)</armgcc.compiler.optimization.level>
@@ -384,6 +388,7 @@
       <Value>../src/config</Value>
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/sam/drivers/spi</Value>
+      <Value>../src/ASF/sam/drivers/rtt</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM7=true -DBOARD=SAME70_XPLAINED -D__FREERTOS__ -D__SAME70Q21__ -Dprintf=iprintf -Dscanf=iscanf</armgcc.preprocessingassembler.general.AssemblerFlags>
@@ -418,6 +423,7 @@
       <Value>../src/config</Value>
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/sam/drivers/spi</Value>
+      <Value>../src/ASF/sam/drivers/rtt</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -474,6 +480,7 @@
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/oled</Value>
       <Value>../src/ASF/sam/drivers/spi</Value>
+      <Value>../src/ASF/sam/drivers/rtt</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -528,6 +535,7 @@
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/sam/drivers/spi</Value>
       <Value>../src/oled</Value>
+      <Value>../src/ASF/sam/drivers/rtt</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
@@ -563,6 +571,7 @@
       <Value>../src/config</Value>
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/sam/drivers/spi</Value>
+      <Value>../src/ASF/sam/drivers/rtt</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -596,6 +605,7 @@
     <Folder Include="src\ASF\sam\drivers\mpu\" />
     <Folder Include="src\ASF\sam\drivers\pio\" />
     <Folder Include="src\ASF\sam\drivers\pmc\" />
+    <Folder Include="src\ASF\sam\drivers\rtt\" />
     <Folder Include="src\ASF\sam\drivers\spi\" />
     <Folder Include="src\ASF\sam\drivers\uart\" />
     <Folder Include="src\ASF\sam\drivers\usart\" />
@@ -637,6 +647,12 @@
     <Folder Include="src\oled\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\ASF\sam\drivers\rtt\rtt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\rtt\rtt.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\ASF\sam\drivers\spi\spi.c">
       <SubType>compile</SubType>
     </Compile>
